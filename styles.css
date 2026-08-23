@@ -790,7 +790,7 @@ footer p {
   }
 
   .portrait-placeholder {
-    width: min(100%, 340px);
+    display: none;
   }
 
   .section-heading {
@@ -860,9 +860,9 @@ footer p {
   }
 
   .site-header nav {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 0.35rem 1.25rem;
+    display: flex;
+    gap: clamp(0.55rem, 2.6vw, 0.9rem);
+    font-size: 0.78rem;
   }
 
   .hero {
