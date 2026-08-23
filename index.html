@@ -30,7 +30,9 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="Ronak Harkhani, home">RH</a>
+      <a class="wordmark" href="#top" aria-label="Ronak Harkhani, home">
+        <img src="favicon-r.svg" alt="" width="32" height="32">
+      </a>
       <nav aria-label="Primary navigation">
         <a href="#work">Work</a>
         <a href="#experience">Experience</a>
@@ -90,18 +92,14 @@
               View project <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <a
+          <div
             class="project-image"
-            href="https://github.com/AxonDragonScale/VariantX"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="View VariantX on GitHub"
           >
             <img
               src="https://raw.githubusercontent.com/AxonDragonScale/VariantX/main/screenshots/variantx-flavor-and-build-type.png"
               alt="VariantX dialog showing Android flavor and build type controls"
             >
-          </a>
+          </div>
         </article>
 
         <div class="collection-heading">
@@ -247,12 +245,8 @@
               View project <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <a
+          <div
             class="project-image"
-            href="https://github.com/AxonDragonScale/Insomnia"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="View Insomnia on GitHub"
           >
             <img
               src="https://raw.githubusercontent.com/AxonDragonScale/Insomnia/main/Docs/home-inactive.png"
@@ -269,7 +263,7 @@
               alt="Insomnia settings for notifications, launch behavior, and menu bar appearance"
               loading="lazy"
             >
-          </a>
+          </div>
         </article>
       </section>
 
@@ -330,7 +324,12 @@
               <p>01 / Activities</p>
               <h3 id="activities-title">Away from the screen</h3>
             </div>
-            <div class="interest-grid activities-grid">
+            <div
+              class="interest-grid activities-grid"
+              role="region"
+              aria-label="Activities"
+              tabindex="0"
+            >
               <article class="interest-card activity-card">
                 <img
                   class="interest-image"
@@ -361,7 +360,12 @@
               <p>02 / Books</p>
               <h3 id="books-title">Frequently on the shelf</h3>
             </div>
-            <div class="interest-grid">
+            <div
+              class="interest-grid"
+              role="region"
+              aria-label="Books"
+              tabindex="0"
+            >
               <article class="interest-card media-card book-card">
                 <img
                   class="interest-image"
@@ -370,7 +374,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>The Licanius Trilogy</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=The+Licanius+Trilogy+James+Islington"
+                    target="_blank"
+                    rel="noreferrer"
+                  >The Licanius Trilogy</a>
+                </h4>
                 <p>James Islington</p>
               </article>
               <article class="interest-card media-card book-card">
@@ -381,7 +391,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Percy Jackson</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Percy+Jackson+Rick+Riordan"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Percy Jackson</a>
+                </h4>
                 <p>Rick Riordan</p>
               </article>
               <article class="interest-card media-card book-card">
@@ -392,7 +408,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Mistborn Trilogy</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Mistborn+Trilogy+Brandon+Sanderson"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Mistborn Trilogy</a>
+                </h4>
                 <p>Brandon Sanderson</p>
               </article>
               <article class="interest-card media-card book-card">
@@ -403,7 +425,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Sapiens</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Sapiens+Yuval+Noah+Harari"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Sapiens</a>
+                </h4>
                 <p>Yuval Noah Harari</p>
               </article>
             </div>
@@ -414,7 +442,12 @@
               <p>03 / Games</p>
               <h3 id="games-title">Games I’ve enjoyed</h3>
             </div>
-            <div class="interest-grid">
+            <div
+              class="interest-grid"
+              role="region"
+              aria-label="Games"
+              tabindex="0"
+            >
               <article class="interest-card media-card game-card">
                 <img
                   class="interest-image"
@@ -423,7 +456,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Hades I & II</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Hades+I+%26+II+Supergiant+Games"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Hades I & II</a>
+                </h4>
                 <p>Supergiant Games</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -434,7 +473,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>God of War</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=God+of+War+Santa+Monica+Studio"
+                    target="_blank"
+                    rel="noreferrer"
+                  >God of War</a>
+                </h4>
                 <p>Santa Monica Studio</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -445,7 +490,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Control</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Control+game+Remedy+Entertainment"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Control</a>
+                </h4>
                 <p>Remedy Entertainment</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -456,7 +507,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Uncharted</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Uncharted+Naughty+Dog"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Uncharted</a>
+                </h4>
                 <p>Naughty Dog</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -467,7 +524,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Clair Obscur: Expedition 33</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Clair+Obscur+Expedition+33"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Clair Obscur: Expedition 33</a>
+                </h4>
                 <p>Sandfall Interactive</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -478,7 +541,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Hi-Fi Rush</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Hi-Fi+Rush"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Hi-Fi Rush</a>
+                </h4>
                 <p>Tango Gameworks</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -489,7 +558,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Ori and the Blind Forest</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Ori+and+the+Blind+Forest"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Ori and the Blind Forest</a>
+                </h4>
                 <p>Moon Studios</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -500,7 +575,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Resident Evil</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Resident+Evil+game+series"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Resident Evil</a>
+                </h4>
                 <p>Capcom</p>
               </article>
               <article class="interest-card media-card game-card">
@@ -511,7 +592,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Tomb Raider</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Tomb+Raider+game+series"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Tomb Raider</a>
+                </h4>
                 <p>Crystal Dynamics</p>
               </article>
             </div>
@@ -522,7 +609,12 @@
               <p>04 / Films</p>
               <h3 id="films-title">Always worth a rewatch</h3>
             </div>
-            <div class="interest-grid films-grid">
+            <div
+              class="interest-grid films-grid"
+              role="region"
+              aria-label="Films"
+              tabindex="0"
+            >
               <article class="interest-card media-card film-card">
                 <img
                   class="interest-image"
@@ -531,7 +623,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>The Shawshank Redemption</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=The+Shawshank+Redemption"
+                    target="_blank"
+                    rel="noreferrer"
+                  >The Shawshank Redemption</a>
+                </h4>
                 <p>1994</p>
               </article>
               <article class="interest-card media-card film-card">
@@ -542,7 +640,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>The Secret Life of Walter Mitty</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=The+Secret+Life+of+Walter+Mitty+2013"
+                    target="_blank"
+                    rel="noreferrer"
+                  >The Secret Life of Walter Mitty</a>
+                </h4>
                 <p>2013</p>
               </article>
               <article class="interest-card media-card film-card">
@@ -553,7 +657,13 @@
                   loading="lazy"
                   decoding="async"
                 >
-                <h4>Wake Up Sid</h4>
+                <h4>
+                  <a
+                    href="https://www.google.com/search?q=Wake+Up+Sid+2009"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Wake Up Sid</a>
+                </h4>
                 <p>2009</p>
               </article>
             </div>
