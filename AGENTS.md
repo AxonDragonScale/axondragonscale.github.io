@@ -90,6 +90,8 @@ Do not add dependencies or tooling unless a requested feature cannot be implemen
 
 The page should work when `index.html` is opened directly and when served by GitHub Pages.
 
+Images live in `assets/` as optimized AVIF files with JPEG fallbacks. `assets/CREDITS.md` records their sources and ownership. Do not hotlink remote images.
+
 ## Current page structure
 
 The navigation links to:
@@ -182,7 +184,7 @@ The Insomnia repository provides three portrait screenshots:
 
 The order above was explicitly chosen. Display all three completely in a compact gallery. Do not use `object-fit: cover`; it cuts off the portrait screenshots. The current constrained flex layout is intended to keep the desktop card at `360px` while fitting all images with `object-fit: contain`.
 
-Project images are currently loaded from `raw.githubusercontent.com`. If files are renamed upstream, update the URLs in `index.html`.
+Project images are stored locally in `assets/projects/` as optimized AVIF files with JPEG fallbacks. If an upstream screenshot changes, re-copy and re-encode it, then update `assets/CREDITS.md`.
 
 ## Employment and education
 
@@ -229,7 +231,9 @@ This section is intentionally split into visual subsections rather than summariz
 - The Secret Life of Walter Mitty
 - Wake Up Sid
 
-The current cards use typographic poster-like visuals instead of third-party cover art. This avoids copyright attribution, inconsistent sources, and fragile external image dependencies. Actual artwork can be reconsidered if Ronak asks for it.
+The cards mix two kinds of art. Activities use Unsplash photographs. Books, games, and films display third-party cover art and posters. All of it is stored locally under `assets/` as a resized AVIF with a JPEG fallback, so the page makes no third-party image requests at runtime.
+
+The covers are decorative, so they use `alt=""` and rely on the adjacent title link. Source URLs and ownership notes live in `assets/CREDITS.md`; update that file whenever an image changes. Cover art and posters remain the property of their respective owners and are used at reduced resolution to identify the work.
 
 ### Carousel behaviour
 
@@ -277,6 +281,8 @@ Keep standard accessibility and mobile support, plus:
 - Reduced-motion support
 - Sufficient contrast
 
+Meaningful screenshots carry descriptive alternative text. Purely decorative card art uses `alt=""` because the adjacent heading already names the item; do not add duplicate descriptions.
+
 Do not simplify away these requirements.
 
 ## Validation
@@ -288,6 +294,7 @@ There is no test framework. After changing the site:
 3. Run `git diff --check`.
 4. Preview responsive behavior when layout CSS changes.
 5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that leaving a rail mid-scroll does not move `scrollLeft`. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
+6. If images change, confirm every referenced `assets/` file exists in both AVIF and JPEG, that no `src="https://` image remains, and that `assets/CREDITS.md` matches.
 
 ## Publishing
 

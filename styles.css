@@ -51,6 +51,10 @@ img {
   max-width: 100%;
 }
 
+picture {
+  display: contents;
+}
+
 .skip-link {
   position: fixed;
   z-index: 10;
@@ -593,7 +597,6 @@ h2 {
   cursor: pointer;
   transform: translateY(-50%);
   transition:
-    background 160ms ease,
     border-color 160ms ease,
     color 160ms ease,
     opacity 160ms ease;

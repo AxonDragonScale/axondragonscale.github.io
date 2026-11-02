@@ -8,9 +8,13 @@ My personal homepage and developer portfolio, featuring the apps and developer t
 
 - Semantic HTML
 - Responsive CSS
+- Self-hosted AVIF and JPEG images
+- A small progressive-enhancement script for the interest carousels
 - GitHub Pages
 
-There is no framework, JavaScript, package manager, or build step.
+There is no framework, package manager, or build step. Content, navigation, and manual scrolling all work without JavaScript; the script only adds mouse-friendly carousel controls.
+
+Image sources and ownership are recorded in [`assets/CREDITS.md`](assets/CREDITS.md).
 
 ## Run locally
 
