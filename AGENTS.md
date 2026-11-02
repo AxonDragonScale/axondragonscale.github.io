@@ -79,14 +79,14 @@ The site intentionally uses:
 
 - One semantic `index.html`
 - One `styles.css`
-- No JavaScript
+- One progressive-enhancement `script.js` for the Beyond code carousels
 - No framework
 - No static-site generator
 - No package manager
 - No build pipeline
 - No analytics
 
-Do not add dependencies or tooling unless a requested feature cannot be implemented cleanly with native HTML and CSS.
+Do not add dependencies or tooling unless a requested feature cannot be implemented cleanly with native HTML and CSS. Keep JavaScript limited to progressive enhancement: content, navigation, and manual scrolling must still work when it is disabled.
 
 The page should work when `index.html` is opened directly and when served by GitHub Pages.
 
@@ -231,6 +231,18 @@ This section is intentionally split into visual subsections rather than summariz
 
 The current cards use typographic poster-like visuals instead of third-party cover art. This avoids copyright attribution, inconsistent sources, and fragile external image dependencies. Actual artwork can be reconsidered if Ronak asks for it.
 
+### Carousel behaviour
+
+Each subsection's row is horizontally scrollable. Swipe, trackpad, wheel, keyboard focus, and native scrollbars (hidden visually) all work without JavaScript.
+
+`script.js` adds mouse-friendly edge rails on top of that:
+
+- The rails are absolutely positioned outside the row (`right: 100%` / `left: 100%`), so they consume no layout space and never cover a card. Row width, card width, and gap must stay identical to the no-JavaScript layout.
+- Hovering a rail scrolls continuously after a short delay; clicking jumps roughly one viewport width. `prefers-reduced-motion` disables autoscroll but keeps the click jump.
+- A rail fades to 22% when there is nothing further in that direction; both are hidden below 820px and on devices without hover, which keeps touch layouts swipe-only.
+- Scroll snapping applies only under `@media (hover: none)`. Never re-enable it on hover-capable devices: snapping back on pointer leave makes the row jump mid-scroll.
+- Keep the DOM order previous → row → next so tab order matches visual order.
+
 ## Deliberately omitted
 
 Do not add these speculatively:
@@ -275,6 +287,7 @@ There is no test framework. After changing the site:
 2. Check any newly introduced remote image or project URLs.
 3. Run `git diff --check`.
 4. Preview responsive behavior when layout CSS changes.
+5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that leaving a rail mid-scroll does not move `scrollLeft`. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
 
 ## Publishing
 

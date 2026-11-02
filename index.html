@@ -25,6 +25,7 @@
       rel="stylesheet"
     >
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -324,34 +325,55 @@
               <p>01 / Activities</p>
               <h3 id="activities-title">Away from the screen</h3>
             </div>
-            <div
-              class="interest-grid activities-grid"
-              role="region"
-              aria-label="Activities"
-              tabindex="0"
-            >
-              <article class="interest-card activity-card">
-                <img
-                  class="interest-image"
-                  src="https://images.unsplash.com/photo-1556817411-51d71c36cd87?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>Gym</h4>
-                <p>I lift a few times a week. Nothing fancy, just trying to stay in shape.</p>
-              </article>
-              <article class="interest-card activity-card">
-                <img
-                  class="interest-image"
-                  src="https://images.unsplash.com/photo-1708312604109-16c0be9326cd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>Badminton</h4>
-                <p>Mostly for fun, though I get competitive once the score gets close.</p>
-              </article>
+            <div class="carousel" data-carousel>
+              <button
+                class="carousel-edge carousel-edge-prev"
+                type="button"
+                data-carousel-prev
+                aria-controls="activities-grid"
+                aria-label="Scroll activities left"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
+              <div
+                class="interest-grid activities-grid"
+                id="activities-grid"
+                role="region"
+                aria-label="Activities"
+                tabindex="0"
+              >
+                <article class="interest-card activity-card">
+                  <img
+                    class="interest-image"
+                    src="https://images.unsplash.com/photo-1556817411-51d71c36cd87?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>Gym</h4>
+                  <p>I lift a few times a week. Nothing fancy, just trying to stay in shape.</p>
+                </article>
+                <article class="interest-card activity-card">
+                  <img
+                    class="interest-image"
+                    src="https://images.unsplash.com/photo-1708312604109-16c0be9326cd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>Badminton</h4>
+                  <p>Mostly for fun, though I get competitive once the score gets close.</p>
+                </article>
+              </div>
+              <button
+                class="carousel-edge carousel-edge-next"
+                type="button"
+                data-carousel-next
+                aria-controls="activities-grid"
+                aria-label="Scroll activities right"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
             </div>
           </section>
 
@@ -360,80 +382,101 @@
               <p>02 / Books</p>
               <h3 id="books-title">Frequently on the shelf</h3>
             </div>
-            <div
-              class="interest-grid"
-              role="region"
-              aria-label="Books"
-              tabindex="0"
-            >
-              <article class="interest-card media-card book-card">
-                <img
-                  class="interest-image"
-                  src="https://covers.openlibrary.org/b/id/8471205-L.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=The+Licanius+Trilogy+James+Islington"
-                    target="_blank"
-                    rel="noreferrer"
-                  >The Licanius Trilogy</a>
-                </h4>
-                <p>James Islington</p>
-              </article>
-              <article class="interest-card media-card book-card">
-                <img
-                  class="interest-image"
-                  src="https://covers.openlibrary.org/b/id/7239831-L.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Percy+Jackson+Rick+Riordan"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Percy Jackson</a>
-                </h4>
-                <p>Rick Riordan</p>
-              </article>
-              <article class="interest-card media-card book-card">
-                <img
-                  class="interest-image"
-                  src="https://covers.openlibrary.org/b/id/11329782-L.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Mistborn+Trilogy+Brandon+Sanderson"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Mistborn Trilogy</a>
-                </h4>
-                <p>Brandon Sanderson</p>
-              </article>
-              <article class="interest-card media-card book-card">
-                <img
-                  class="interest-image"
-                  src="https://covers.openlibrary.org/b/id/8634250-L.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Sapiens+Yuval+Noah+Harari"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Sapiens</a>
-                </h4>
-                <p>Yuval Noah Harari</p>
-              </article>
+            <div class="carousel" data-carousel>
+              <button
+                class="carousel-edge carousel-edge-prev"
+                type="button"
+                data-carousel-prev
+                aria-controls="books-grid"
+                aria-label="Scroll books left"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
+              <div
+                class="interest-grid"
+                id="books-grid"
+                role="region"
+                aria-label="Books"
+                tabindex="0"
+              >
+                <article class="interest-card media-card book-card">
+                  <img
+                    class="interest-image"
+                    src="https://covers.openlibrary.org/b/id/8471205-L.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=The+Licanius+Trilogy+James+Islington"
+                      target="_blank"
+                      rel="noreferrer"
+                    >The Licanius Trilogy</a>
+                  </h4>
+                  <p>James Islington</p>
+                </article>
+                <article class="interest-card media-card book-card">
+                  <img
+                    class="interest-image"
+                    src="https://covers.openlibrary.org/b/id/7239831-L.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Percy+Jackson+Rick+Riordan"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Percy Jackson</a>
+                  </h4>
+                  <p>Rick Riordan</p>
+                </article>
+                <article class="interest-card media-card book-card">
+                  <img
+                    class="interest-image"
+                    src="https://covers.openlibrary.org/b/id/11329782-L.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Mistborn+Trilogy+Brandon+Sanderson"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Mistborn Trilogy</a>
+                  </h4>
+                  <p>Brandon Sanderson</p>
+                </article>
+                <article class="interest-card media-card book-card">
+                  <img
+                    class="interest-image"
+                    src="https://covers.openlibrary.org/b/id/8634250-L.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Sapiens+Yuval+Noah+Harari"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Sapiens</a>
+                  </h4>
+                  <p>Yuval Noah Harari</p>
+                </article>
+              </div>
+              <button
+                class="carousel-edge carousel-edge-next"
+                type="button"
+                data-carousel-next
+                aria-controls="books-grid"
+                aria-label="Scroll books right"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
             </div>
           </section>
 
@@ -442,165 +485,186 @@
               <p>03 / Games</p>
               <h3 id="games-title">Games I’ve enjoyed</h3>
             </div>
-            <div
-              class="interest-grid games-grid"
-              role="region"
-              aria-label="Games"
-              tabindex="0"
-            >
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/c/cc/Hades_cover_art.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Hades+I+%26+II+Supergiant+Games"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Hades I & II</a>
-                </h4>
-                <p>Supergiant Games</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=God+of+War+Santa+Monica+Studio"
-                    target="_blank"
-                    rel="noreferrer"
-                  >God of War</a>
-                </h4>
-                <p>Santa Monica Studio</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/e/e5/Control_game_cover_art.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Control+game+Remedy+Entertainment"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Control</a>
-                </h4>
-                <p>Remedy Entertainment</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/1/1a/Uncharted_4_box_artwork.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Uncharted+Naughty+Dog"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Uncharted</a>
-                </h4>
-                <p>Naughty Dog</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/5/5a/Clair_Obscur%2C_Expedition_33_Cover_1.webp"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Clair+Obscur+Expedition+33"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Clair Obscur: Expedition 33</a>
-                </h4>
-                <p>Sandfall Interactive</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/f/fc/Hi-Fi_Rush_cover_art.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Hi-Fi+Rush"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Hi-Fi Rush</a>
-                </h4>
-                <p>Tango Gameworks</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/b/b2/Ori_and_the_Blind_Forest_Logo.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Ori+and+the+Blind+Forest"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Ori and the Blind Forest</a>
-                </h4>
-                <p>Moon Studios</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/d/df/Resident_Evil_4_remake_cover_art.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Resident+Evil+game+series"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Resident Evil</a>
-                </h4>
-                <p>Capcom</p>
-              </article>
-              <article class="interest-card media-card game-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/f/f1/TombRaider2013.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Tomb+Raider+game+series"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Tomb Raider</a>
-                </h4>
-                <p>Crystal Dynamics</p>
-              </article>
+            <div class="carousel" data-carousel>
+              <button
+                class="carousel-edge carousel-edge-prev"
+                type="button"
+                data-carousel-prev
+                aria-controls="games-grid"
+                aria-label="Scroll games left"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
+              <div
+                class="interest-grid games-grid"
+                id="games-grid"
+                role="region"
+                aria-label="Games"
+                tabindex="0"
+              >
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/c/cc/Hades_cover_art.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Hades+I+%26+II+Supergiant+Games"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Hades I & II</a>
+                  </h4>
+                  <p>Supergiant Games</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=God+of+War+Santa+Monica+Studio"
+                      target="_blank"
+                      rel="noreferrer"
+                    >God of War</a>
+                  </h4>
+                  <p>Santa Monica Studio</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/e/e5/Control_game_cover_art.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Control+game+Remedy+Entertainment"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Control</a>
+                  </h4>
+                  <p>Remedy Entertainment</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/1/1a/Uncharted_4_box_artwork.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Uncharted+Naughty+Dog"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Uncharted</a>
+                  </h4>
+                  <p>Naughty Dog</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/5/5a/Clair_Obscur%2C_Expedition_33_Cover_1.webp"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Clair+Obscur+Expedition+33"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Clair Obscur: Expedition 33</a>
+                  </h4>
+                  <p>Sandfall Interactive</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/f/fc/Hi-Fi_Rush_cover_art.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Hi-Fi+Rush"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Hi-Fi Rush</a>
+                  </h4>
+                  <p>Tango Gameworks</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/b/b2/Ori_and_the_Blind_Forest_Logo.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Ori+and+the+Blind+Forest"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Ori and the Blind Forest</a>
+                  </h4>
+                  <p>Moon Studios</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/d/df/Resident_Evil_4_remake_cover_art.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Resident+Evil+game+series"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Resident Evil</a>
+                  </h4>
+                  <p>Capcom</p>
+                </article>
+                <article class="interest-card media-card game-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/f/f1/TombRaider2013.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Tomb+Raider+game+series"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Tomb Raider</a>
+                  </h4>
+                  <p>Crystal Dynamics</p>
+                </article>
+              </div>
+              <button
+                class="carousel-edge carousel-edge-next"
+                type="button"
+                data-carousel-next
+                aria-controls="games-grid"
+                aria-label="Scroll games right"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
             </div>
           </section>
 
@@ -609,63 +673,84 @@
               <p>04 / Films</p>
               <h3 id="films-title">Always worth a rewatch</h3>
             </div>
-            <div
-              class="interest-grid films-grid"
-              role="region"
-              aria-label="Films"
-              tabindex="0"
-            >
-              <article class="interest-card media-card film-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=The+Shawshank+Redemption"
-                    target="_blank"
-                    rel="noreferrer"
-                  >The Shawshank Redemption</a>
-                </h4>
-                <p>1994</p>
-              </article>
-              <article class="interest-card media-card film-card">
-                <img
-                  class="interest-image"
-                  src="https://media2.firstshowing.net/firstshowing/img7/waltermitty-firstposter-full.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=The+Secret+Life+of+Walter+Mitty+2013"
-                    target="_blank"
-                    rel="noreferrer"
-                  >The Secret Life of Walter Mitty</a>
-                </h4>
-                <p>2013</p>
-              </article>
-              <article class="interest-card media-card film-card">
-                <img
-                  class="interest-image"
-                  src="https://upload.wikimedia.org/wikipedia/en/9/9f/Wake_up_Sid.jpg"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                >
-                <h4>
-                  <a
-                    href="https://www.google.com/search?q=Wake+Up+Sid+2009"
-                    target="_blank"
-                    rel="noreferrer"
-                  >Wake Up Sid</a>
-                </h4>
-                <p>2009</p>
-              </article>
+            <div class="carousel" data-carousel>
+              <button
+                class="carousel-edge carousel-edge-prev"
+                type="button"
+                data-carousel-prev
+                aria-controls="films-grid"
+                aria-label="Scroll films left"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
+              <div
+                class="interest-grid films-grid"
+                id="films-grid"
+                role="region"
+                aria-label="Films"
+                tabindex="0"
+              >
+                <article class="interest-card media-card film-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=The+Shawshank+Redemption"
+                      target="_blank"
+                      rel="noreferrer"
+                    >The Shawshank Redemption</a>
+                  </h4>
+                  <p>1994</p>
+                </article>
+                <article class="interest-card media-card film-card">
+                  <img
+                    class="interest-image"
+                    src="https://media2.firstshowing.net/firstshowing/img7/waltermitty-firstposter-full.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=The+Secret+Life+of+Walter+Mitty+2013"
+                      target="_blank"
+                      rel="noreferrer"
+                    >The Secret Life of Walter Mitty</a>
+                  </h4>
+                  <p>2013</p>
+                </article>
+                <article class="interest-card media-card film-card">
+                  <img
+                    class="interest-image"
+                    src="https://upload.wikimedia.org/wikipedia/en/9/9f/Wake_up_Sid.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <h4>
+                    <a
+                      href="https://www.google.com/search?q=Wake+Up+Sid+2009"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Wake Up Sid</a>
+                  </h4>
+                  <p>2009</p>
+                </article>
+              </div>
+              <button
+                class="carousel-edge carousel-edge-next"
+                type="button"
+                data-carousel-next
+                aria-controls="films-grid"
+                aria-label="Scroll films right"
+              >
+                <span class="carousel-chevron" aria-hidden="true"></span>
+              </button>
             </div>
           </section>
         </div>
