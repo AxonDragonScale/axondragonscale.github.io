@@ -15,5 +15,4 @@
 ## Future assets
 
 - Replace the `RH` portrait placeholder when a profile photo is available.
-- Create a social sharing image before adding `og:image` metadata.
 - Review the third-party cover art and posters documented in `assets/CREDITS.md` if a fully licensed set is preferred.

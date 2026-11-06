@@ -1,0 +1,144 @@
+<!doctype html>
+<!-- Generator for assets/social/og.png; see assets/CREDITS.md. Not a page of the site. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <title>Social sharing card generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=Manrope:wght@400;600&display=swap"
+      rel="stylesheet"
+    >
+    <style>
+      :root {
+        --background: #0a0d0c;
+        --text: #f2f5f3;
+        --muted: #9aa59f;
+        --line: #2f3a34;
+        --green: #62d49c;
+        --blue: #5caeff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        margin: 0;
+        overflow: hidden;
+        background: var(--background);
+      }
+
+      body {
+        color: var(--text);
+        font-family: "Manrope", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      /* The site's 32px grid, masked into the top-right corner. */
+      .grid {
+        position: absolute;
+        top: -64px;
+        right: -64px;
+        width: 820px;
+        height: 560px;
+        background-image:
+          linear-gradient(var(--line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 32px 32px;
+        opacity: 0.55;
+        -webkit-mask-image: radial-gradient(
+          ellipse 62% 68% at 84% 12%,
+          black 0%,
+          rgb(0 0 0 / 45%) 52%,
+          transparent 80%
+        );
+        mask-image: radial-gradient(
+          ellipse 62% 68% at 84% 12%,
+          black 0%,
+          rgb(0 0 0 / 45%) 52%,
+          transparent 80%
+        );
+      }
+
+      .content {
+        position: absolute;
+        top: 50%;
+        right: 96px;
+        left: 96px;
+        transform: translateY(-50%);
+      }
+
+      .eyebrow {
+        margin: 0 0 28px;
+        color: var(--green);
+        font-family: "DM Mono", monospace;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 0.26em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 104px;
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 1;
+      }
+
+      .rule {
+        width: 88px;
+        height: 1px;
+        margin: 40px 0 26px;
+        background: var(--green);
+      }
+
+      .meta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        font-family: "DM Mono", monospace;
+        font-size: 19px;
+        line-height: 1;
+      }
+
+      .place {
+        color: var(--muted);
+      }
+
+      .url {
+        color: var(--blue);
+        font-size: 17px;
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="grid" aria-hidden="true"></div>
+      <div class="content">
+        <p class="eyebrow">Android Engineer</p>
+        <h1>Ronak Harkhani</h1>
+        <div class="rule" aria-hidden="true"></div>
+        <div class="meta">
+          <span class="place">Bengaluru, India</span>
+          <span class="url">axondragonscale.github.io</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

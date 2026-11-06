@@ -8,6 +8,27 @@ Cover art, posters, and screenshots remain the property of their respective
 owners. They are reproduced here at reduced resolution to identify the work or
 product. This repository's Apache License does not apply to them.
 
+## Social sharing card
+
+`assets/social/og.png` is original artwork created for this site; no third-party
+attribution applies. It is used only as the Open Graph and Twitter preview
+image, so it ships as a single 1200×630 PNG rather than the AVIF plus JPEG pair
+used for in-page imagery.
+
+The card is generated from `assets/social/og.html`, which uses the site's own
+palette and 32px grid and loads Manrope and DM Mono from Google Fonts; the fonts
+are not embedded. Regenerate it with headless Firefox:
+
+```sh
+P="$DELTA_SCRATCH_DIR/ffprof"
+mkdir -p "$P"
+printf '%s\n' 'user_pref("browser.shell.checkDefaultBrowser", false);' \
+  'user_pref("browser.startup.page", 0);' > "$P/prefs.js"
+"/Applications/Firefox.app/Contents/MacOS/firefox" -profile "$P" --headless \
+  --screenshot "$PWD/assets/social/og.png" --window-size=1200,630 \
+  "file://$PWD/assets/social/og.html"
+```
+
 ## Project screenshots
 
 | File | Source | Credit |

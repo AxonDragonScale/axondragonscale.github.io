@@ -339,13 +339,30 @@ h1 {
 }
 
 .section {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  column-gap: 1.5rem;
+  align-items: start;
   padding-block: clamp(5rem, 10vw, 9rem);
   border-top: 1px solid var(--line);
 }
 
+.section > * {
+  grid-column: 2;
+}
+
+/* The number sits in its own gutter and stays with you through the section. */
+.section > .section-number {
+  position: sticky;
+  top: calc(5rem + 2rem);
+  grid-column: 1;
+  grid-row: 1 / -1;
+  margin-bottom: 0;
+}
+
 .section-heading {
   display: grid;
-  grid-template-columns: 70px minmax(220px, 0.8fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1fr);
   gap: 1.5rem;
   align-items: start;
   margin-bottom: clamp(3rem, 7vw, 6rem);
@@ -607,10 +624,6 @@ h2 {
   font-weight: 600;
 }
 
-.about {
-  display: block;
-}
-
 .about .section-heading {
   margin-bottom: clamp(3rem, 7vw, 6rem);
 }
@@ -629,7 +642,7 @@ h2 {
 
 .interest-heading {
   position: sticky;
-  top: 2rem;
+  top: calc(5rem + 1rem);
   align-self: start;
 }
 
@@ -862,6 +875,9 @@ h2 {
 }
 
 .media-card {
+  /* The track width has to win over the ratio: a tall min-height would
+     otherwise imply a wider box that covers the gap beside it. */
+  width: 100%;
   aspect-ratio: 3 / 4;
   min-height: 250px;
 }
@@ -944,6 +960,63 @@ h2 {
 
 .contact-link-card:first-child strong {
   font-size: 1.1rem;
+}
+
+.contact-email-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.contact-email-link {
+  min-width: 0;
+}
+
+/* This card is a container, not a link, so the external-link mark is noise. */
+.contact-email::after {
+  content: none;
+}
+
+.copy-email {
+  display: none;
+  flex: none;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+/* Only offered when the script can honour the click. */
+.has-js .copy-email {
+  display: inline-flex;
+}
+
+.copy-email:hover {
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+.copy-email.is-copied {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.copy-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -1046,12 +1119,12 @@ footer p {
     display: none;
   }
 
-  .section-heading {
-    grid-template-columns: 50px 1fr;
+  .section {
+    grid-template-columns: 50px minmax(0, 1fr);
   }
 
-  .section-heading > p:last-child {
-    grid-column: 2;
+  .section-heading {
+    grid-template-columns: 1fr;
   }
 
   .project-featured,
@@ -1134,6 +1207,15 @@ footer p {
 
   h1 {
     font-size: clamp(3.4rem, 19vw, 5rem);
+  }
+
+  .section {
+    display: block;
+  }
+
+  .section > .section-number {
+    position: static;
+    margin-bottom: 0.75rem;
   }
 
   .section-heading {

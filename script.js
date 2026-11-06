@@ -228,3 +228,86 @@ if (hoverPointer.matches && !reduceMotion.matches) {
     );
   });
 }
+
+const copyEmail = document.querySelector(".copy-email");
+
+if (copyEmail) {
+  const copyStatus = document.querySelector(".copy-status");
+  const idleLabel = copyEmail.textContent.trim();
+  let resetTimer = 0;
+
+  // The button is hidden until this class arrives, so it is never a dead
+  // control when the script does not run.
+  document.documentElement.classList.add("has-js");
+
+  // execCommand is the only option on file:// and other non-secure origins,
+  // where navigator.clipboard is unavailable.
+  const legacyCopy = (value) => {
+    const field = document.createElement("textarea");
+    const selection = document.getSelection();
+    const previous = selection && selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+    field.value = value;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.top = "-1000px";
+    document.body.append(field);
+    field.select();
+
+    let copied = false;
+
+    try {
+      copied = document.execCommand("copy");
+    } catch {
+      copied = false;
+    }
+
+    field.remove();
+
+    if (previous) {
+      selection.removeAllRanges();
+      selection.addRange(previous);
+    }
+
+    return copied;
+  };
+
+  const copy = async () => {
+    const value = copyEmail.dataset.copy;
+    let copied = false;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(value);
+        copied = true;
+      } catch {
+        copied = false;
+      }
+    }
+
+    if (!copied) {
+      copied = legacyCopy(value);
+    }
+
+    copyEmail.textContent = copied ? "Copied" : "Try again";
+    copyEmail.classList.toggle("is-copied", copied);
+
+    if (copyStatus) {
+      copyStatus.textContent = copied
+        ? "Email address copied to clipboard"
+        : "Could not copy the email address";
+    }
+
+    window.clearTimeout(resetTimer);
+    resetTimer = window.setTimeout(() => {
+      copyEmail.textContent = idleLabel;
+      copyEmail.classList.remove("is-copied");
+
+      if (copyStatus) {
+        copyStatus.textContent = "";
+      }
+    }, 2000);
+  };
+
+  copyEmail.addEventListener("click", copy);
+}

@@ -98,17 +98,21 @@ The page should work when `index.html` is opened directly and when served by Git
 
 Images live in `assets/` as optimized AVIF files with JPEG fallbacks. `assets/CREDITS.md` records their sources and ownership. Do not hotlink remote images.
 
+The one exception is the social preview: `assets/social/og.png` is a single 1200×630 PNG generated from `assets/social/og.html`, because link-preview crawlers are unreliable with AVIF. It is original artwork, not a third-party image. `index.html` points `og:image` and `twitter:image` at it by absolute URL, so the filename and path must not change without updating both tags.
+
 ### Interaction layer
 
 Everything below is progressive enhancement: content, navigation, and manual carousel scrolling work without JavaScript, and motion is skipped under `prefers-reduced-motion: reduce`.
 
 - The header is a full-bleed sticky element with an inner container that keeps the wordmark and nav on the page gutters. `scroll-padding-top` on `html` keeps anchor targets clear of it. The translucent scrim and blur are CSS-only; `script.js` adds `is-stuck` past 24px to firm the hairline.
+- Each section is a two-column grid: a 70px number gutter plus the content. The number is sticky, so it tracks its section while the content scrolls past. Below 820px the gutter narrows to 50px, and below 600px the number returns to a plain block above the heading. Because the gutter is real, section content is inset to line up with the section heading.
 - `script.js` sets `aria-current="location"` on the nav link whose section has passed under the header. The existing green underline is styled from that attribute. The hero leaves every link inactive, and the bottom of the page resolves to Contact.
 - `script.js` adds `js-reveal` to `<html>` and observes section headings, project cards, timeline items, interest groups, and contact cards. CSS hides only `.js-reveal .reveal`, so content stays visible without JavaScript or if the observer is never installed. Focusing a hidden target reveals it. The effect is skipped entirely under reduced motion. Targets are painted once before that class arrives, so `no-reveal-transition` suppresses transitions for two frames; without it the page visibly fades those targets out on load and on deep links.
 - Project and contact cards carry a faint radial highlight positioned by `--spot-x` and `--spot-y`, updated on `pointermove` inside a `requestAnimationFrame`. It exists only under `(hover: hover) and (prefers-reduced-motion: no-preference)`.
 - The grain is a static inline `feTurbulence` SVG data URI stored in `--grain` and used as a background layer. It adds no request, blend mode, or pointer target.
 - The hero grid reuses the 32px `--line` motif from the portrait placeholder. It is radial-masked toward the portrait side, sits behind the copy, drifts slowly with `transform`, and is hidden below 820px where the portrait is also hidden.
 - Selection uses `--green` with the near-black background token, and the page scrollbar is thin and `--line`. The interest carousels keep their scrollbars hidden.
+- The email card is a container rather than a link, so it can carry a Copy button beside the address. `script.js` adds `has-js` to `<html>` and the button stays hidden without it, so there is never a dead control. Feedback is a two-second label swap plus a polite status region; `navigator.clipboard` is used where available, with an `execCommand` fallback for `file://` and other non-secure origins. The address itself remains a `mailto:` link.
 
 ## Current page structure
 
@@ -313,7 +317,7 @@ There is no test framework. After changing the site:
 3. Run `git diff --check`.
 4. Preview responsive behavior when layout CSS changes.
 5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that leaving a rail mid-scroll does not move `scrollLeft`. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
-6. If images change, confirm every referenced `assets/` file exists in both AVIF and JPEG, that no `src="https://` image remains, and that `assets/CREDITS.md` matches.
+6. If images change, confirm every referenced `assets/` file exists in both AVIF and JPEG, that no `src="https://` image remains, and that `assets/CREDITS.md` matches. The social preview PNG is the documented exception: confirm it still exists at the path both `og:image` and `twitter:image` name.
 7. If the interaction layer changes, verify the no-JavaScript and reduced-motion paths still leave all content visible.
 
 ## Publishing
