@@ -1,9 +1,13 @@
-// Progressive enhancement: add hover-to-scroll edges to horizontally
-// scrollable interest strips. Swipe, trackpad, wheel, and keyboard scrolling
-// all work without this file.
+// Progressive enhancement: hover-to-scroll edges, sticky header state, active
+// section nav, scroll reveal, and pointer spotlight. Content, navigation, and
+// manual carousel scrolling all work without this file.
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const hoverPointer = window.matchMedia("(hover: hover)");
 const EDGE_DELAY = 140;
 const EDGE_SPEED = 11;
+const HEADER_THRESHOLD = 24;
+const REVEAL_TARGETS =
+  ".section-heading, .project, .timeline-item, .interest-group, .contact-link-card";
 
 document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   const track = carousel.querySelector(".interest-grid");
@@ -101,3 +105,126 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   window.addEventListener("load", update);
   update();
 });
+
+const header = document.querySelector(".site-header");
+const navLinks = [...document.querySelectorAll('.site-header nav a[href^="#"]')];
+const sections = navLinks.map((link) => document.querySelector(link.getAttribute("href")));
+const scrollPadding =
+  Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+let headerFrame = 0;
+
+const updateHeader = () => {
+  headerFrame = 0;
+  header.classList.toggle("is-stuck", window.scrollY > HEADER_THRESHOLD);
+
+  // A section becomes current once its top passes the gap that anchor jumps
+  // leave under the sticky header. The end of the page always resolves to
+  // Contact.
+  const line = Math.max(header.offsetHeight, scrollPadding) + 8;
+  let active = null;
+
+  for (const section of sections) {
+    if (section && section.getBoundingClientRect().top <= line) {
+      active = section;
+    }
+  }
+
+  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    active = sections[sections.length - 1];
+  }
+
+  navLinks.forEach((link, index) => {
+    if (active && sections[index] === active) {
+      if (link.getAttribute("aria-current") !== "location") {
+        link.setAttribute("aria-current", "location");
+      }
+    } else if (link.hasAttribute("aria-current")) {
+      link.removeAttribute("aria-current");
+    }
+  });
+};
+
+const queueHeaderUpdate = () => {
+  if (!headerFrame) {
+    headerFrame = window.requestAnimationFrame(updateHeader);
+  }
+};
+
+window.addEventListener("scroll", queueHeaderUpdate, { passive: true });
+window.addEventListener("resize", queueHeaderUpdate);
+window.addEventListener("load", updateHeader);
+updateHeader();
+
+const revealTargets = document.querySelectorAll(REVEAL_TARGETS);
+
+if (!reduceMotion.matches && "IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) {
+          continue;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+  );
+
+  revealTargets.forEach((target) => {
+    const siblings = [...target.parentElement.children].filter((element) =>
+      element.matches(REVEAL_TARGETS)
+    );
+
+    target.style.setProperty(
+      "--reveal-delay",
+      `${Math.min(siblings.indexOf(target), 4) * 60}ms`
+    );
+    target.classList.add("reveal");
+    observer.observe(target);
+  });
+
+  // Add the hook last: until the observer is observing every target, CSS must
+  // not hide anything.
+  document.documentElement.classList.add("js-reveal");
+
+  // These targets were painted at full opacity before this class arrived, so
+  // hide them without transitioning. Transitions come back two frames later,
+  // once the hidden state has been painted.
+  document.documentElement.classList.add("no-reveal-transition");
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.remove("no-reveal-transition");
+    });
+  });
+}
+
+if (hoverPointer.matches && !reduceMotion.matches) {
+  document.querySelectorAll(".project, .contact-link-card").forEach((card) => {
+    let frame = 0;
+    let x = 0;
+    let y = 0;
+
+    const paint = () => {
+      frame = 0;
+      card.style.setProperty("--spot-x", `${x}px`);
+      card.style.setProperty("--spot-y", `${y}px`);
+    };
+
+    card.addEventListener(
+      "pointermove",
+      (event) => {
+        const bounds = card.getBoundingClientRect();
+        x = event.clientX - bounds.left;
+        y = event.clientY - bounds.top;
+
+        if (!frame) {
+          frame = window.requestAnimationFrame(paint);
+        }
+      },
+      { passive: true }
+    );
+  });
+}

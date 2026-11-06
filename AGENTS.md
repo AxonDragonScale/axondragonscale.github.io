@@ -68,6 +68,12 @@ Preserve these characteristics unless Ronak requests a redesign:
 - Responsive layout
 - Reduced-motion support
 
+Interaction-level details stay within that same language:
+
+- A sticky header with a translucent near-black scrim and backdrop blur; its hairline firms once the page scrolls.
+- A faint grain over the background and a masked 32px grid drifting behind the hero.
+- A green underline marking the section in view, and a faint pointer highlight on project and contact cards.
+
 Fonts currently come from Google Fonts:
 
 - Manrope for general text
@@ -79,7 +85,7 @@ The site intentionally uses:
 
 - One semantic `index.html`
 - One `styles.css`
-- One progressive-enhancement `script.js` for the Beyond code carousels
+- One progressive-enhancement `script.js` for the carousels and interaction layer
 - No framework
 - No static-site generator
 - No package manager
@@ -91,6 +97,18 @@ Do not add dependencies or tooling unless a requested feature cannot be implemen
 The page should work when `index.html` is opened directly and when served by GitHub Pages.
 
 Images live in `assets/` as optimized AVIF files with JPEG fallbacks. `assets/CREDITS.md` records their sources and ownership. Do not hotlink remote images.
+
+### Interaction layer
+
+Everything below is progressive enhancement: content, navigation, and manual carousel scrolling work without JavaScript, and motion is skipped under `prefers-reduced-motion: reduce`.
+
+- The header is a full-bleed sticky element with an inner container that keeps the wordmark and nav on the page gutters. `scroll-padding-top` on `html` keeps anchor targets clear of it. The translucent scrim and blur are CSS-only; `script.js` adds `is-stuck` past 24px to firm the hairline.
+- `script.js` sets `aria-current="location"` on the nav link whose section has passed under the header. The existing green underline is styled from that attribute. The hero leaves every link inactive, and the bottom of the page resolves to Contact.
+- `script.js` adds `js-reveal` to `<html>` and observes section headings, project cards, timeline items, interest groups, and contact cards. CSS hides only `.js-reveal .reveal`, so content stays visible without JavaScript or if the observer is never installed. Focusing a hidden target reveals it. The effect is skipped entirely under reduced motion. Targets are painted once before that class arrives, so `no-reveal-transition` suppresses transitions for two frames; without it the page visibly fades those targets out on load and on deep links.
+- Project and contact cards carry a faint radial highlight positioned by `--spot-x` and `--spot-y`, updated on `pointermove` inside a `requestAnimationFrame`. It exists only under `(hover: hover) and (prefers-reduced-motion: no-preference)`.
+- The grain is a static inline `feTurbulence` SVG data URI stored in `--grain` and used as a background layer. It adds no request, blend mode, or pointer target.
+- The hero grid reuses the 32px `--line` motif from the portrait placeholder. It is radial-masked toward the portrait side, sits behind the copy, drifts slowly with `transform`, and is hidden below 820px where the portrait is also hidden.
+- Selection uses `--green` with the near-black background token, and the page scrollbar is thin and `--line`. The interest carousels keep their scrollbars hidden.
 
 ## Current page structure
 
@@ -276,6 +294,7 @@ Keep standard accessibility and mobile support, plus:
 
 - Keyboard-first navigation
 - Visible focus indicators
+- `aria-current="location"` on the active nav link
 - Semantic heading hierarchy
 - Descriptive image alternative text
 - Reduced-motion support
@@ -295,6 +314,7 @@ There is no test framework. After changing the site:
 4. Preview responsive behavior when layout CSS changes.
 5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that leaving a rail mid-scroll does not move `scrollLeft`. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
 6. If images change, confirm every referenced `assets/` file exists in both AVIF and JPEG, that no `src="https://` image remains, and that `assets/CREDITS.md` matches.
+7. If the interaction layer changes, verify the no-JavaScript and reduced-motion paths still leave all content visible.
 
 ## Publishing
 
