@@ -96,9 +96,9 @@ Images live in `assets/` as optimized AVIF files with JPEG fallbacks. `assets/CR
 
 The navigation links to:
 
-1. Work
+1. Projects
 2. Experience
-3. About
+3. Interests
 4. Contact
 
 The content sections are:
