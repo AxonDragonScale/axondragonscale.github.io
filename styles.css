@@ -973,13 +973,49 @@ h2 {
   min-width: 0;
 }
 
-/* This card is a container, not a link, so the external-link mark is noise. */
-.contact-email::after {
-  content: none;
+/* The card opens the mail app, but it cannot be a link outright because it
+   carries a Copy button. The address link stretches over the card instead, and
+   the controls that must stay clickable sit above that overlay. */
+.contact-email-link::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.contact-email-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mail-fallback {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.mail-fallback:not([hidden]) {
+  display: block;
+}
+
+.mail-fallback a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.mail-fallback a:hover {
+  text-decoration-color: var(--green);
 }
 
 .copy-email {
   display: none;
+  position: relative;
+  z-index: 1;
   flex: none;
   padding: 0.3rem 0.55rem;
   border: 1px solid var(--line);

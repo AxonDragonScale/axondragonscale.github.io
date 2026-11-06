@@ -1,6 +1,7 @@
 // Progressive enhancement: hover-to-scroll edges, sticky header state, active
-// section nav, scroll reveal, and pointer spotlight. Content, navigation, and
-// manual carousel scrolling all work without this file.
+// section nav, scroll reveal, pointer spotlight, and the email card's copy and
+// mail-app handoff. Content, navigation, and manual carousel scrolling all work
+// without this file.
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const hoverPointer = window.matchMedia("(hover: hover)");
 const EDGE_DELAY = 140;
@@ -310,4 +311,50 @@ if (copyEmail) {
   };
 
   copyEmail.addEventListener("click", copy);
+}
+
+// The email card hands off to the visitor's mail app through its mailto: link,
+// so the OS routes to whichever app is registered on that machine. A browser
+// with no handler registered ignores the click completely, so fall back to
+// webmail compose links when nothing takes the page's focus.
+const mailCard = document.querySelector(".contact-email");
+const mailFallback = document.querySelector("[data-mail-fallback]");
+
+if (mailCard && mailFallback) {
+  const HANDOFF_GRACE = 1400;
+  let handoff = 0;
+  let mailTimer = 0;
+
+  // An app or tab taking over the click is the only proof a handler exists.
+  const markHandoff = () => {
+    handoff = 1;
+    window.clearTimeout(mailTimer);
+  };
+
+  mailCard.addEventListener("click", (event) => {
+    if (event.target.closest(".copy-email")) {
+      return;
+    }
+
+    // A webmail choice replaces the hint that led to it.
+    if (event.target.closest(".mail-fallback")) {
+      mailFallback.hidden = true;
+      return;
+    }
+
+    handoff = 0;
+    window.clearTimeout(mailTimer);
+    mailTimer = window.setTimeout(() => {
+      if (!handoff) {
+        mailFallback.hidden = false;
+      }
+    }, HANDOFF_GRACE);
+  });
+
+  window.addEventListener("blur", markHandoff);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      markHandoff();
+    }
+  });
 }
