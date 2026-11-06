@@ -111,7 +111,7 @@ Everything below is progressive enhancement: content, navigation, and manual car
 - Project and contact cards carry a faint radial highlight positioned by `--spot-x` and `--spot-y`, updated on `pointermove` inside a `requestAnimationFrame`. It exists only under `(hover: hover) and (prefers-reduced-motion: no-preference)`.
 - The grain is a static inline `feTurbulence` SVG data URI stored in `--grain` and used as a background layer. It adds no request, blend mode, or pointer target.
 - The hero grid reuses the 32px `--line` motif from the portrait placeholder. It is radial-masked toward the portrait side, sits behind the copy, drifts slowly with `transform`, and is hidden below 820px where the portrait is also hidden.
-- Selection uses `--green` with the near-black background token, and the page scrollbar is thin and `--line`. The interest carousels keep their scrollbars hidden.
+- Selection uses `--green` with the near-black background token, and the page scrollbar is thin and `--line`. The interest carousels hide their native scrollbars and draw their own (see Carousel behaviour).
 - The email card opens the visitor's mail app. It is a container rather than a link so it can carry a Copy button, and the `mailto:` address link stretches over the whole card through `::after`; the Copy button and the fallback links are raised above that overlay so they stay clickable. `script.js` adds `has-js` to `<html>` and the button stays hidden without it, so there is never a dead control. Feedback is a two-second label swap plus a polite status region; `navigator.clipboard` is used where available, with an `execCommand` fallback for `file://` and other non-secure origins. Because a browser with no registered mail handler ignores `mailto:` in silence, `script.js` waits out a handoff signal (window blur or a hidden tab) and otherwise reveals Gmail and Outlook compose links inside the card. The `↗` mark appears on all four contact cards; on the email card it accompanies the stretched address link rather than a plain card wrapper. Choosing a webmail provider clears the hint.
 
 ## Current page structure
@@ -261,13 +261,12 @@ The covers are decorative, so they use `alt=""` and rely on the adjacent title l
 
 Each subsection's row is horizontally scrollable. Swipe, trackpad, wheel, keyboard focus, and native scrollbars (hidden visually) all work without JavaScript.
 
-`script.js` adds mouse-friendly edge rails on top of that:
+Card widths have a floor, so a narrower window scrolls the row instead of squeezing the cards out of proportion. Each row's floor in `styles.css` is that row's card width on the widest page (`--page-width`), which keeps the 4-up/3-up/2-up counts on wide screens; recompute the floors if `--page-width` changes. Cover art cards are a fixed `3 / 4` with no `min-height`, so the floor sets the width and the ratio sets the height. Do not reintroduce a container-relative column width without a floor: the two-column Beyond code layout shrinks the carousel down to a fraction of the page and produces sliver cards.
 
-- The rails are absolutely positioned outside the row (`right: 100%` / `left: 100%`), so they consume no layout space and never cover a card. Row width, card width, and gap must stay identical to the no-JavaScript layout.
-- Hovering a rail scrolls continuously after a short delay; clicking jumps roughly one viewport width. `prefers-reduced-motion` disables autoscroll but keeps the click jump.
-- A rail fades to 22% when there is nothing further in that direction; both are hidden below 820px and on devices without hover, which keeps touch layouts swipe-only.
+`script.js` adds a scrollbar to each row on top of that:
+
+- Each row has its own scrollbar instead of a native one: `script.js` builds `.carousel-scrollbar` and sizes its thumb from `scrollLeft`, `clientWidth`, and `scrollWidth`. It is a 2px `--line` track with a `--blue` thumb, fades in on row hover or focus, and pages the row when the track beside the thumb is clicked. It takes no layout space: it is absolutely positioned in the empty band the row's 16px bottom padding leaves under the cards, so its offset follows that padding. It is hidden on `(hover: none)`, and without `script.js` no bar exists at all. Dragging the thumb is an extra affordance; wheel, touch, and keyboard stay the real scrolling paths.
 - Scroll snapping applies only under `@media (hover: none)`. Never re-enable it on hover-capable devices: snapping back on pointer leave makes the row jump mid-scroll.
-- Keep the DOM order previous → row → next so tab order matches visual order.
 
 ## Deliberately omitted
 
@@ -316,7 +315,7 @@ There is no test framework. After changing the site:
 2. Check any newly introduced remote image or project URLs.
 3. Run `git diff --check`.
 4. Preview responsive behavior when layout CSS changes.
-5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that leaving a rail mid-scroll does not move `scrollLeft`. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
+5. If carousel markup, CSS, or `script.js` changes, verify the row geometry still matches the committed baseline, and that a hovered row's scrollbar thumb tracks `scrollLeft` without moving it. Parse `script.js` with `jsc -e 'new Function(readFile("script.js"))'`.
 6. If images change, confirm every referenced `assets/` file exists in both AVIF and JPEG, that no `src="https://` image remains, and that `assets/CREDITS.md` matches. The social preview PNG is the documented exception: confirm it still exists at the path both `og:image` and `twitter:image` name.
 7. If the interaction layer changes, verify the no-JavaScript and reduced-motion paths still leave all content visible.
 

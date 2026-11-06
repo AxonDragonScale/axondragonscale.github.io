@@ -667,108 +667,67 @@ h2 {
   min-width: 0;
 }
 
-.carousel-edge {
+/* The row's own scrollbar: a hairline under the row rather than a native one, so
+   it matches the rest of the page and stays out of the way until the row is
+   hovered or focused. script.js sizes and moves the thumb; it does not run
+   without that file, where the rows still scroll natively. It takes no layout
+   space: it sits in the empty band that .interest-grid's own bottom padding
+   leaves below the cards, so this offset follows that padding. */
+.carousel-scrollbar {
   position: absolute;
-  top: 50%;
-  z-index: 2;
-  display: none;
-  width: 36px;
-  height: 140px;
-  padding: 0;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--blue);
-  -webkit-appearance: none;
-  appearance: none;
-  place-items: center;
-  cursor: pointer;
-  transform: translateY(-50%);
-  transition:
-    border-color 160ms ease,
-    color 160ms ease,
-    opacity 160ms ease;
-}
-
-.carousel.is-scrollable .carousel-edge {
-  display: grid;
-}
-
-.carousel-edge-prev {
-  right: 100%;
-  margin-right: 8px;
-}
-
-.carousel-edge-next {
-  left: 100%;
-  margin-left: 8px;
-}
-
-.carousel-edge:disabled {
-  opacity: 0.22;
-  cursor: default;
+  inset-inline: 0;
+  bottom: -12px;
+  height: 2px;
+  background: var(--line);
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.carousel-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--blue);
+  cursor: grab;
+}
+
+/* 2px of paint, but a 14px grab zone. */
+.carousel-scrollbar-thumb::before {
+  position: absolute;
+  inset: -6px 0;
+  content: "";
+}
+
+/* The bar hangs below the row's box, so hovering it has to keep it showing as
+   well as hovering the row itself. */
+.carousel.is-scrollable:hover .carousel-scrollbar,
+.carousel.is-scrollable:focus-within .carousel-scrollbar,
+.carousel.is-scrollable.is-dragging .carousel-scrollbar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carousel.is-dragging .carousel-scrollbar-thumb {
+  background: var(--blue-hover);
+  cursor: grabbing;
 }
 
 @media (hover: none) {
-  .carousel.is-scrollable .carousel-edge {
+  .carousel-scrollbar {
     display: none;
   }
-}
-
-@media (max-width: 1267px) {
-  .carousel-edge-next {
-    width: 22px;
-    margin-left: 2px;
-  }
-}
-
-@media (max-width: 820px) {
-  .carousel.is-scrollable .carousel-edge {
-    display: none;
-  }
-}
-
-.carousel-edge:hover:not(:disabled),
-.carousel-edge:focus-visible {
-  border-color: var(--blue);
-  background: var(--surface);
-  color: var(--text);
-}
-
-.carousel-edge:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 4px;
-}
-
-.carousel-chevron {
-  width: 7px;
-  height: 7px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transition:
-    transform 160ms ease,
-    translate 160ms ease;
-}
-
-.carousel-edge-prev .carousel-chevron {
-  transform: rotate(-135deg);
-}
-
-.carousel-edge-next .carousel-chevron {
-  transform: rotate(45deg);
-}
-
-.carousel-edge-prev:hover:not(:disabled) .carousel-chevron {
-  translate: -2px 0;
-}
-
-.carousel-edge-next:hover:not(:disabled) .carousel-chevron {
-  translate: 2px 0;
 }
 
 .interest-grid {
   display: grid;
-  grid-auto-columns: calc((100% - 3rem) / 4);
+  /* The rows scroll, so a card keeps the width it has on the widest page
+     instead of shrinking with the container. Each floor below is that row's
+     card width at --page-width: 1180px, so the desktop column count is
+     unchanged and narrower windows scroll the row instead of squeezing it.
+     Keep the floors in step if --page-width changes. */
+  grid-auto-columns: minmax(174px, calc((100% - 3rem) / 4));
   grid-auto-flow: column;
   gap: 1rem;
   margin-block: -8px -16px;
@@ -789,15 +748,15 @@ h2 {
 }
 
 .activities-grid {
-  grid-auto-columns: calc((100% - 1rem) / 2);
+  grid-auto-columns: minmax(364px, calc((100% - 1rem) / 2));
 }
 
 .films-grid {
-  grid-auto-columns: calc((100% - 2rem) / 3);
+  grid-auto-columns: minmax(237px, calc((100% - 2rem) / 3));
 }
 
 .games-grid {
-  grid-auto-columns: calc((100% - 3rem) / 4.25);
+  grid-auto-columns: minmax(164px, calc((100% - 3rem) / 4.25));
 }
 
 .interest-grid:focus-visible {
@@ -875,11 +834,11 @@ h2 {
 }
 
 .media-card {
-  /* The track width has to win over the ratio: a tall min-height would
-     otherwise imply a wider box that covers the gap beside it. */
+  /* The track width has to win over the ratio: a min-height would otherwise
+     imply a wider box that covers the gap beside it. Width comes from the row's
+     floor and height from the cover art's ratio, so it never stretches. */
   width: 100%;
   aspect-ratio: 3 / 4;
-  min-height: 250px;
 }
 
 .media-card:hover .interest-image {
@@ -888,10 +847,6 @@ h2 {
 
 .activity-card {
   min-height: 220px;
-}
-
-.film-card {
-  min-height: 280px;
 }
 
 .contact-grid {
@@ -1194,9 +1149,8 @@ footer p {
     position: static;
   }
 
-  .interest-grid,
-  .films-grid {
-    grid-auto-columns: calc((100% - 2rem) / 3);
+  .interest-grid {
+    grid-auto-columns: minmax(174px, calc((100% - 2rem) / 3));
   }
 
   .timeline {

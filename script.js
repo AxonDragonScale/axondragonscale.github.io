@@ -1,99 +1,114 @@
-// Progressive enhancement: hover-to-scroll edges, sticky header state, active
-// section nav, scroll reveal, pointer spotlight, and the email card's copy and
-// mail-app handoff. Content, navigation, and manual carousel scrolling all work
-// without this file.
+// Progressive enhancement: hover-revealed carousel scrollbars, sticky header
+// state, active section nav, scroll reveal, pointer spotlight, and the email
+// card's copy and mail-app handoff. Content, navigation, and manual carousel
+// scrolling all work without this file.
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const hoverPointer = window.matchMedia("(hover: hover)");
-const EDGE_DELAY = 140;
-const EDGE_SPEED = 11;
 const HEADER_THRESHOLD = 24;
 const REVEAL_TARGETS =
   ".section-heading, .project, .timeline-item, .interest-group, .contact-link-card";
 
 document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   const track = carousel.querySelector(".interest-grid");
-  const previous = carousel.querySelector("[data-carousel-prev]");
-  const next = carousel.querySelector("[data-carousel-next]");
 
-  if (!track || !previous || !next) {
+  if (!track) {
     return;
   }
 
-  let frame = 0;
-  let timer = 0;
-  let direction = 0;
+  let drag = null;
+
+  // A hairline scrollbar under the row, sized from the scroll position. It is
+  // built here rather than in the markup, so a page without this file never
+  // shows a control that cannot move.
+  const scrollbar = document.createElement("div");
+  const thumb = document.createElement("div");
+
+  scrollbar.className = "carousel-scrollbar";
+  scrollbar.setAttribute("aria-hidden", "true");
+  thumb.className = "carousel-scrollbar-thumb";
+  scrollbar.append(thumb);
+  carousel.append(scrollbar);
 
   const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
+
+  const paintScrollbar = (max) => {
+    // The bar is only faded out, so it is measurable before it is first shown.
+    const length = scrollbar.clientWidth;
+    const width = Math.min(
+      length,
+      Math.max(24, length * (track.clientWidth / track.scrollWidth))
+    );
+
+    thumb.style.width = `${width}px`;
+    thumb.style.transform = `translateX(${
+      (max ? track.scrollLeft / max : 0) * (length - width)
+    }px)`;
+  };
 
   const update = () => {
     const max = maxScroll();
     const scrollable = max > 4;
 
     carousel.classList.toggle("is-scrollable", scrollable);
-    previous.disabled = !scrollable || track.scrollLeft <= 1;
-    next.disabled = !scrollable || track.scrollLeft >= max - 1;
-  };
-
-  const stop = () => {
-    window.clearTimeout(timer);
-    timer = 0;
-    direction = 0;
-
-    if (frame) {
-      window.cancelAnimationFrame(frame);
-      frame = 0;
-    }
-  };
-
-  const tick = () => {
-    if (!direction) {
-      return;
-    }
-
-    const max = maxScroll();
-    const target = Math.min(max, Math.max(0, track.scrollLeft + direction * EDGE_SPEED));
-
-    if (target === track.scrollLeft) {
-      stop();
-      update();
-      return;
-    }
-
-    track.scrollLeft = target;
-    update();
-    frame = window.requestAnimationFrame(tick);
-  };
-
-  const start = (step) => {
-    if (reduceMotion.matches) {
-      return;
-    }
-
-    stop();
-    timer = window.setTimeout(() => {
-      direction = step;
-      frame = window.requestAnimationFrame(tick);
-    }, EDGE_DELAY);
+    paintScrollbar(max);
   };
 
   const jump = (step) => {
-    stop();
     track.scrollBy({
       left: step * track.clientWidth * 0.9,
       behavior: reduceMotion.matches ? "auto" : "smooth",
     });
   };
 
-  previous.addEventListener("pointerenter", () => start(-1));
-  next.addEventListener("pointerenter", () => start(1));
+  // Dragging the thumb mirrors a native scrollbar for mouse users. Wheel, touch,
+  // and keyboard already scroll the row, so this only adds an affordance.
+  const endDrag = () => {
+    if (!drag) {
+      return;
+    }
 
-  for (const button of [previous, next]) {
-    button.addEventListener("pointerleave", stop);
-    button.addEventListener("focus", stop);
-    button.addEventListener("click", () => {
-      jump(button === previous ? -1 : 1);
-    });
+    drag = null;
+    carousel.classList.remove("is-dragging");
+  };
+
+  thumb.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) {
+      return;
+    }
+
+    const travel = scrollbar.clientWidth - thumb.offsetWidth;
+    const max = maxScroll();
+
+    if (travel <= 0 || max <= 0) {
+      return;
+    }
+
+    drag = { x: event.clientX, scroll: track.scrollLeft, scale: max / travel };
+    carousel.classList.add("is-dragging");
+    thumb.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  thumb.addEventListener("pointermove", (event) => {
+    if (drag) {
+      track.scrollLeft = drag.scroll + (event.clientX - drag.x) * drag.scale;
+    }
+  });
+
+  for (const type of ["pointerup", "pointercancel"]) {
+    thumb.addEventListener(type, endDrag);
   }
+
+  // Clicking the track beside the thumb pages the row.
+  scrollbar.addEventListener("pointerdown", (event) => {
+    if (event.target !== scrollbar || event.button !== 0) {
+      return;
+    }
+
+    const bounds = scrollbar.getBoundingClientRect();
+
+    jump(event.clientX < bounds.left + bounds.width / 2 ? -1 : 1);
+  });
 
   track.addEventListener("scroll", update, { passive: true });
 
